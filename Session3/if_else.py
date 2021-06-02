@@ -10,7 +10,7 @@ elif (shopping_cost >= 100.00):
 else:
     total_cost = shopping_cost
 
-if total_cost <= 30.00:
+if total_cost < 30.00:
     total_cost = total_cost + shipping
 
 print(f'The total cost is {total_cost}')
