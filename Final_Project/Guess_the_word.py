@@ -5,7 +5,6 @@ def guess_word():
     choice = random.randint(0, len(my_list)-1)
     word = my_list[choice]
     return word
-    # print(guess_word)
 
 def ans():
     ans=[]
@@ -14,12 +13,11 @@ def ans():
     for i in range(length):
         ans.append("_")
     print(' '.join(ans))
-    return ans
+    return [ans, word]
 
 def main():
     attempts = 0
-    user_ans = ans()
-    word = guess_word()
+    user_ans, word = ans()
 
     while (user_ans != list(word)) and (attempts < 5):
         guess_letter = input("Enter a letter: ")
@@ -29,10 +27,13 @@ def main():
             for position,l in enumerate(word):
                 if l == guess_letter:
                     user_ans[position]= guess_letter
+        
+        elif len(guess_letter) == len(word) and guess_letter == word:
+            break
 
-        elif len(guess_letter) > 1:
+        elif len(guess_letter) > 1 or len(guess_letter) != len(word):
             attempts = attempts + 1
-            print('Error: You have entered more than 1 letter')
+            print('Error: Incorrect Input')
         
         else:
             attempts = attempts + 1
