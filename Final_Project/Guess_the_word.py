@@ -6,6 +6,7 @@ def guess_word():
     word = my_list[choice]
     return word
 
+#  Fetching the word and replacing it with '_ _ _ _'
 def ans():
     ans=[]
     word = guess_word()
@@ -20,23 +21,22 @@ def main():
     user_ans, word = ans()
 
     while (user_ans != list(word)) and (attempts < 5):
-        guess_letter = input("Enter a letter: ")
+        guess_letter = input('Enter a letter or the word if you have guessed it:\n')
 
-        if (len(guess_letter) == 1) and (guess_letter in word):
-            # enumerate function assigns each letter with an index. Ex: enumerate['h','e','l','l','o']= (0 h, 1 e, 2 l, 3 l, 4 o)
-            for position,l in enumerate(word):
-                if l == guess_letter:
-                    user_ans[position]= guess_letter
-        
-        elif len(guess_letter) == len(word) and guess_letter == word:
+        if guess_letter == word:
             break
 
-        elif len(guess_letter) > 1 or len(guess_letter) != len(word):
-            attempts = attempts + 1
-            print('Error: Incorrect Input')
-        
+        elif guess_letter in word:
+            # enumerate function assigns each letter with an index. Ex: enumerate['h','e','l','l','o']= (0 h, 1 e, 2 l, 3 l, 4 o)
+            for position,l in enumerate(word):
+                # This loop is useful if len(guess_letter) > 1 and is in the 'word'
+                for i in list(guess_letter): 
+                    if l == i:
+                        user_ans[position]= i
+
         else:
             attempts = attempts + 1
+            print('Error: Incorrect Input')
         
         print(' '.join(user_ans))
 
