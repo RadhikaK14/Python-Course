@@ -33,6 +33,7 @@ def ans(word):
 
 def logic(user_ans, word):
     attempts = 0
+    hang_man_image = hang_man()
     while (user_ans != list(word)) and (attempts < 10):
         guess_letter = input('Enter a letter or the word(if you have guessed it) : ')
 
@@ -43,7 +44,7 @@ def logic(user_ans, word):
             attempts = attempts + 1
             attempts_remaining = 10 - attempts
             print(f'\033[2J')
-            print(Hanging_man[attempts])
+            print(hang_man_image[attempts])
             print(f"You have already entered '{guess_letter}'. Try a different one!")
             print(f'{attempts_remaining} attempts remaining.')
 
@@ -62,7 +63,7 @@ def logic(user_ans, word):
             attempts_remaining = 10 - attempts
             print(f'\033[2J')
             if(attempts<10):
-                print(Hanging_man[attempts])
+                print(hang_man_image[attempts])
                 print(f'Wrong! Try again. {attempts_remaining} attempts remaining.')
                 print(' '.join(user_ans))
         
@@ -85,39 +86,25 @@ def main():
         word = guess_word(list)
         user_ans = ans(word)
         attempts = logic(user_ans, word)
+        hang_man_image = hang_man()
 
         if attempts >= 10:
-            print(Hanging_man[10])
+            print(hang_man_image[10])
             print(f"Word is '{word}'")
         else:
-            print(Hanging_man[11])
+            print(hang_man_image[11])
 
-Hanging_man = [
+def hang_man():
+    Hanging_man = [
 '''
       +
 =========''',
-# '''
-#       +
-#       |
-# =========''',
-# '''
-#       +
-#       |
-#       |
-# =========''',
 '''
       +
       |
       |
       |
-=========''',
-# '''
-#       +
-#       |
-#       |
-#       |
-#       |
-# =========''',   
+=========''',  
 '''
       +
       |
@@ -126,14 +113,6 @@ Hanging_man = [
       |
       |
 =========''',
-# '''
-#      ++
-#       |
-#       |
-#       |
-#       |
-#       |
-# =========''',
 '''
     +-+
       |
@@ -142,22 +121,6 @@ Hanging_man = [
       |
       |
 =========''',
-# '''
-#    +--+
-#       |
-#       |
-#       |
-#       |
-#       |
-# =========''',
-# '''
-#   +---+
-#       |
-#       |
-#       |
-#       |
-#       |
-# =========''',
 '''
   +---+
       |
@@ -166,14 +129,6 @@ Hanging_man = [
       |
       |
 =========''',
-# '''
-#   +---+
-#   |   |
-#       |
-#       |
-#       |
-#       |
-# =========''', 
 '''
   +---+
   |   |
@@ -190,14 +145,6 @@ Hanging_man = [
       |
       |
 =========''', 
-# '''
-#   +---+
-#   |   |
-#   O   |
-#  /|   |
-#       |
-#       |
-# =========''', 
 '''
   +---+
   |   |
@@ -206,14 +153,6 @@ Hanging_man = [
       |
       |
 =========''', 
-# '''
-#   +---+
-#   |   |
-#   O   |
-#  /|\  |
-#  /    |
-#       |
-# =========''', 
 '''
   +---+
   |   |
@@ -247,6 +186,7 @@ GAME OVER
  / \  |
 =========
 =YOU WIN=""",
-
 ]
+    return Hanging_man
+
 main()
