@@ -1,21 +1,30 @@
 import random
+import json
 
-# def create_list():
-#     my_list = ['hello', 'world', 'python']
-#     with open ('word.txt', 'w') as file:
-#         file.writelines(['hello\nworld\npython'])
+def load_data():
+    with open ('hangman_words.json') as file:
+        data = json.load(file)
+    return data
 
-def word_list():
-    my_list = []
-    with open ('word.txt', 'r') as file:
-        file_read = file.readlines()
-        for i in file_read:
-            if i[-1] == '\n':
-                my_list.append(i[:-1])
-            else:
-                my_list.append(i)
-    # print(my_list)
-    return my_list
+def choose_topic():
+    print('Choose "word to guess" from the below topic :')
+    choice = int(input('1.Easy \n2.Difficult\n3.Random words \n4.Animals \n5.Science/Sciences \n6.Sample data\n'))
+    if choice == 1:
+        topic = 'Easy'
+    elif choice == 2:
+        topic = 'Difficult'
+    elif choice == 3:
+        topic = 'Random'
+    elif choice == 4:
+        topic = 'Animals'
+    elif choice == 5:
+        topic = 'Science'
+    elif choice == 6:
+        topic = 'Sample'
+    else:
+        print('Invalid Input. Please try again')
+        choose_topic()
+    return topic
 
 def guess_word(my_list):
     choice = random.randint(0, len(my_list)-1)
@@ -33,7 +42,6 @@ def ans(word):
 
 def logic(user_ans, word):
     attempts = 0
-    hang_man_image = hang_man()
     while (user_ans != list(word)) and (attempts < 10):
         guess_letter = input('Enter a letter or the word(if you have guessed it) : ')
 
@@ -44,7 +52,7 @@ def logic(user_ans, word):
             attempts = attempts + 1
             attempts_remaining = 10 - attempts
             print(f'\033[2J')
-            print(hang_man_image[attempts])
+            print(hang_man[attempts])
             print(f"You have already entered '{guess_letter}'. Try a different one!")
             print(f'{attempts_remaining} attempts remaining.')
 
@@ -63,13 +71,10 @@ def logic(user_ans, word):
             attempts_remaining = 10 - attempts
             print(f'\033[2J')
             if(attempts<10):
-                print(hang_man_image[attempts])
+                print(hang_man[attempts])
                 print(f'Wrong! Try again. {attempts_remaining} attempts remaining.')
                 print(' '.join(user_ans))
         
-        # clears the terminal screen
-        # print(f'\033[2J')
-        # print(' '.join(user_ans))
     return attempts
 
 def main():
@@ -80,22 +85,21 @@ def main():
         # first_name = input('Please enter your first name : ')
         # last_name = input('Enter your last name : ')
         # name = first_name.capitalize() + ' ' +last_name.capitalize()
+        topic = choose_topic()
+        quiz_words = load_data()
         # print(f'Hello {name}. Start guessing 🤔' )
         # score = []
-        list = word_list()
-        word = guess_word(list)
+        word = guess_word(quiz_words[topic])
         user_ans = ans(word)
         attempts = logic(user_ans, word)
-        hang_man_image = hang_man()
 
         if attempts >= 10:
-            print(hang_man_image[10])
+            print(hang_man[10])
             print(f"Word is '{word}'")
         else:
-            print(hang_man_image[11])
+            print(hang_man[11])
 
-def hang_man():
-    Hanging_man = [
+hang_man= [
 '''
       +
 =========''',
@@ -187,6 +191,5 @@ GAME OVER
 =========
 =YOU WIN=""",
 ]
-    return Hanging_man
 
 main()
