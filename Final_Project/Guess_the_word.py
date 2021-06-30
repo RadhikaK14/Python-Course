@@ -46,7 +46,8 @@ def ans(word):
 # logic to match the user's input with the word
 def logic(user_ans, word):
     attempts = 0
-    count = 0
+    count = 0 # to calculate score
+    user_input = [] # to display user's input
     # loop for accepting user's input and checking it with the word. 
     while (user_ans != list(word)) and (attempts < 10):
         letter = input('Enter a letter or the word(if you have guessed it) : ')
@@ -56,13 +57,13 @@ def logic(user_ans, word):
             count = len(word)
             break
                 
-        elif guess_letter in user_ans: # to check if user is repeating the letters
-            attempts = attempts + 1
-            attempts_remaining = 10 - attempts
-            print(f'\033[2J')   # to clear the screen above
-            print(hang_man[attempts])
-            print(f"You have already entered '{guess_letter}'. Try a different one!")
-            print(f'{attempts_remaining} attempts remaining.')
+        # elif guess_letter in user_input: # to check if user is repeating the letters
+        #     attempts = attempts + 1
+        #     attempts_remaining = 10 - attempts
+        #     print(f'\033[2J')   # to clear the screen above
+        #     print(hang_man[attempts])
+        #     print(f"You have already entered '{guess_letter}'. Try a different one!")
+        #     print(f'{attempts_remaining} attempts remaining.')
 
         elif guess_letter in word:
             # enumerate function assigns each letter with an index. Ex: enumerate['h','e','l','l','o']= (0 h, 1 e, 2 l, 3 l, 4 o)
@@ -80,7 +81,9 @@ def logic(user_ans, word):
             if(attempts<10):
                 print(hang_man[attempts])
                 print(f'Wrong! Try again. {attempts_remaining} attempts remaining.')
-                
+        
+        user_input.append(letter)
+        print(f'You have entered : {user_input}')       
         print(' '.join(user_ans)) # join method returns a string 
     return attempts, count
 
@@ -104,29 +107,31 @@ def scoring(word_count, len_word):
     return user_score, message
 
 def main():
-    play_game = input('Are you ready to play Hangman? (y/n) : ')
-        
-    if play_game.lower() == 'y' or play_game.lower() == 'yes':
- 
-        quiz_words = load_data()       
-        topic = choose_topic()
-        word = guess_word(quiz_words[topic])
-        user_ans, length_word = ans(word)
-        attempts, userword_count = logic(user_ans, word)
-        score, message = scoring(userword_count, length_word)
-
-        if attempts >= 10:
-            print(f'\033[2J')
-            print(hang_man[10])
-        else:
-            print(f'\033[2J')
-            print(hang_man[11])
-        print(f"Word is '{word}'")
-        print(f'Your score is : {score} - {message}')
-    else:
-        print('See you later, Bye!')
+    play = True
+    while(play == True):
+        play_game = input('Do you want to play Hangman? (y/n) : ')
+            
+        if play_game.lower() == 'y' or play_game.lower() == 'yes':
     
+            quiz_words = load_data()       
+            topic = choose_topic()
+            word = guess_word(quiz_words[topic])
+            user_ans, length_word = ans(word)
+            attempts, userword_count = logic(user_ans, word)
+            score, message = scoring(userword_count, length_word)
 
+            if attempts >= 10:
+                print(f'\033[2J')
+                print(hang_man[10])
+            else:
+                print(f'\033[2J')
+                print(hang_man[11])
+            print(f"Word is '{word}'")
+            print(f'Your score is : {score} - {message}')
+        else:
+            play = False
+            print('See you later, Bye!')
+    
 hang_man= [
 '''
       +
