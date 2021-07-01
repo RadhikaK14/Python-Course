@@ -283,15 +283,28 @@ def write_data(words):
     with open('hangman_words.json', 'w') as file:
         json.dump(words, file)
 
-# write_data(data)
-
 def load_data():
     with open ('hangman_words.json') as file:
         data = json.load(file)
     return data
 
-quiz_words = load_data()
-# pprint.pprint(quiz_words)
+def write_json(new_data, filename='hangman_words.json'):
+    with open(filename,'r+') as file:
+          # First we load existing data into a dict.
+        file_data = json.load(file)
+        # Join new_data with file_data inside emp_details
+        file_data["Sample"].append(new_data)
+        # Sets file's current position at offset.
+        file.seek(0)
+        # convert back to json.
+        json.dump(file_data, file, indent = 4)
 
-a = quiz_words['Animals']
-print(len(a))
+def main():
+    # write_data(data)
+    y = 'Project' # new data to be appened
+    write_json(y)
+    # quiz_words = load_data()
+    # pprint.pprint(quiz_words)
+
+    # a = quiz_words['Animals']
+    # print(len(a))
