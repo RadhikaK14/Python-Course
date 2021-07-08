@@ -290,19 +290,15 @@ def load_data():
 
 def write_json(new_data, filename='hangman_words.json'):
     with open(filename,'r+') as file:
-          # First we load existing data into a dict.
-        file_data = json.load(file)
-        # Join new_data with file_data inside emp_details
-        file_data["Sample"].append(new_data)
-        # Sets file's current position at offset.
-        file.seek(0)
-        # convert back to json.
-        json.dump(file_data, file, indent = 4)
+        file_data = json.load(file) # First we load existing data into a dict.
+        file_data["Sample"].append(new_data) # Join new_data with file_data inside 'Sample'
+        file.seek(0) # Sets file's current position at offset.
+        json.dump(file_data, file, indent = 4) # convert back to json.
 
 def main():
-    # write_data(data)
-    y = 'Project' # new data to be appened
-    write_json(y)
+    write_data(data)
+    # y = 'Project' # new data to be appened
+    # write_json(y)
     # quiz_words = load_data()
     # pprint.pprint(quiz_words)
 
