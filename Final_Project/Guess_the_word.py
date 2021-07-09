@@ -110,7 +110,7 @@ def main():
         if play_game.lower() == 'y' or play_game.lower() == 'yes':
            
             topic = choose_topic()
-            print(quiz_words[topic])
+            # print(quiz_words[topic])
             word = guess_word(quiz_words[topic])
             user_ans, length_word = ans(word)
             attempts, userword_count = logic(user_ans, word)
